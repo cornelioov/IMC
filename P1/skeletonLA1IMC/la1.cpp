@@ -26,14 +26,15 @@ using namespace util;
 
 int main(int argc, char **argv) {
     // Process arguments of the command line
-    bool Tflag = 0, wflag = 0, pflag = 0;
-    char *Tvalue = NULL, *wvalue = NULL;
+    bool tflag= 0, Tflag = 0, iflag = 0, lflag = 0, hflag = 0, eflag = 0, mflag = 0, sflag = 0, wflag = 0, pflag = 0;
+    char *tvalue = NULL, *Tvalue = NULL, *wvalue = NULL;
     int c;
 
     opterr = 0;
 
     /////////////////////////////////////////////////////
-
+    int ivalue = 0, lvalue = 0, hvalue = 0;
+    float evalue = 0.0, mvalue = 0.0
     /////////////////////////////////////////////////////
 
     // a: Option that requires an argument
@@ -50,6 +51,29 @@ int main(int argc, char **argv) {
             case 'T':
                 Tflag = true;
                 Tvalue = optarg;
+                break;
+            case 'i':
+                iflag = true;
+                ivalue = atoi(optarg);
+                break;
+            case 'l':
+                lflag = true;
+                lvalue = atoi(optarg);
+                break;
+            case 'h':
+                hflag = true;
+                hvalue = atoi(optarg);
+                break;
+            case 'e':
+                eflag = true;
+                evalue = atof(optarg);
+                break;
+            case 'm':
+                mflag = true;
+                mvalue = atof(optarg);
+                break;
+            case 's':
+                sflag = true;
                 break;
             case 'w':
                 wflag = true;
@@ -71,6 +95,12 @@ int main(int argc, char **argv) {
             default:
                 return EXIT_FAILURE;
         }
+    }
+
+    if(!tflag)
+    {
+        cerr << "ERROR: Argument -t is mandatory" << endl;
+        return EXIT_FAILURE;
     }
 
     if (!pflag) {
