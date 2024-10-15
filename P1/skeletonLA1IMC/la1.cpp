@@ -34,7 +34,7 @@ int main(int argc, char **argv) {
 
     /////////////////////////////////////////////////////
     int ivalue = 0, lvalue = 0, hvalue = 0;
-    float evalue = 0.0, mvalue = 0.0
+    float evalue = 0.0, mvalue = 0.0;
     /////////////////////////////////////////////////////
 
     // a: Option that requires an argument
@@ -108,15 +108,53 @@ int main(int argc, char **argv) {
         // TRAINING AND EVALUATION MODE //
         //////////////////////////////////
 
+        if(!iflag)
+        {
+            ivalue = 1000;
+        }
+
+        if(!lflag)
+        {
+            lvalue = 1;
+        }
+
+        if(!hflag)
+        {
+            hvalue = 5;
+        }
+
+        if(!eflag)
+        {
+            evalue = 0.1;
+        }
+
+        if(!mflag)
+        {
+            mvalue = 0.9;
+        }
+
+        if(!Tflag)
+        {
+            Tvalue = tvalue;
+        }
+
         // Multilayer perceptron object
     	MultilayerPerceptron mlp;
 
         // Parameters of the mlp. For example, mlp.eta = value;
-    	int iterations = -1; // This should be corrected
+    	int iterations = ivalue; // This should be corrected
 
         // Read training and test data: call to util::readData(...)
-    	Dataset * trainDataset = NULL; // This should be corrected
-    	Dataset * testDataset = NULL; // This should be corrected
+    	Dataset * trainDataset = readData(tvalue); // This should be corrected
+        Dataset * testDataset;
+    	if(!Tflag)
+        {
+            testDataset = trainDataset;
+        }
+        else
+        {
+            testDataset = readData(Tvalue);
+        }
 
         // Initialize topology vector
     	int layers=-1; // This should be corrected
