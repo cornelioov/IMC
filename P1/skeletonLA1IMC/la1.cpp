@@ -156,9 +156,32 @@ int main(int argc, char **argv) {
             testDataset = readData(Tvalue);
         }
 
+        if(sflag)
+        {
+            // Escalamos los datos de entrada
+            double *minTrain = minDatasetInputs(trainDataset);
+            double *maxTrain = maxDatasetInputs(trainDataset);
+            minMaxScalerDataSetInputs(trainDataset,-1,1,minTrain,maxTrain);
+            minMaxScalerDataSetInputs(testDataset,-1,1,minTrain,maxTrain);
+
+            //Escalamos los datos de salida
+            double minTest = minDatasetOutputs(testDataset);
+            double maxTest = maxDatasetOutputs(testDataset);
+            minMaxScalerDataSetOutputs(trainDataset,0,1,minTest,maxTest);
+            minMaxScalerDataSetOutputs(testDataset,0,1,minTest,maxTest);
+        }
+
         // Initialize topology vector
-    	int layers=-1; // This should be corrected
-    	int * topology=NULL; // This should be corrected
+    	int layers=lvalue; // This should be corrected
+    	int * topology=(int *)(lvalue + 2); // This should be corrected
+
+        topology[0] = trainDataset->nOfInputs;
+        topology[layers+1] = trainDataset->nOfOutputs;
+
+        for(int i=1; i<layers+1; i++)
+        {
+            topology[i] = hvalue;
+        }
 
         // Initialize the network using the topology vector
         mlp.initialize(layers+2,topology);
