@@ -214,6 +214,21 @@ int main(int argc, char **argv) {
         double averageTrainError = 0, stdTrainError = 0;
         
         // Obtain training and test averages and standard deviations
+        for(int i=0; i<5; i++)
+        {
+            averageTestError += testErrors[i];
+            averageTrainError += trainErrors[i];
+        }
+        averageTestError = averageTestError/5;
+        averageTrainError = averageTrainError/5;
+
+        for(int i=0; i<5; i++)
+        {
+            stdTestError += pow(testErrors[i] - averageTestError, 2);
+            stdTrainError += pow(trainErrors[i] - averageTrainError, 2);
+        }
+        stdTestError = sqrt(stdTestError/5);
+        stdTrainError = sqrt(stdTrainError/5);
 
         cout << "FINAL REPORT" << endl;
         cout << "************" << endl;
